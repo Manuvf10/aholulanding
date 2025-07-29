@@ -197,7 +197,7 @@ export default function Home() {
 
       {/* WHATSAPP */}
       <a
-        href="https://wa.me/34600000000"
+        href="https://wa.me/34673273478"
         target="_blank"
         rel="noopener noreferrer"
         className="whatsapp-button"
