@@ -589,3 +589,45 @@ body {
     align-items: center;
   }
 }
+/* Evita que Safari/iOS cambie los colores en modo oscuro */
+@media (prefers-color-scheme: dark) {
+  body,
+  .aholu-landing,
+  .hero,
+  .section,
+  .card,
+  .modal {
+    filter: none !important;
+    background: #ffffff !important;
+    color: #121212 !important;
+  }
+}
+
+/* Fuerza el esquema de color claro */
+html {
+  color-scheme: light;
+}
+/* Evita que Safari invierta colores */
+* {
+  -webkit-text-stroke: 0px; /* Evita bordes raros en texto */
+}
+
+img,
+svg,
+video,
+canvas,
+button,
+input,
+textarea,
+select {
+  -webkit-user-select: auto;
+  -webkit-touch-callout: default;
+}
+
+/* Desactiva la inversión de Safari */
+@media (prefers-color-scheme: dark) {
+  html {
+    filter: none !important;
+    background: none !important;
+  }
+}
