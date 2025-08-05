@@ -6,6 +6,8 @@ import './landing.css';
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [contactSuccess, setContactSuccess] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   const scrollToTop = () => {
@@ -14,7 +16,7 @@ export default function Home() {
   };
 
   useEffect(() => {
-    const handleEsc = (e: { key: string; }) => {
+    const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         setIsModalOpen(false);
         setMenuOpen(false);
@@ -24,23 +26,67 @@ export default function Home() {
     return () => window.removeEventListener('keydown', handleEsc);
   }, []);
 
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
+  const handleModalSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSuccess(true);
-    setTimeout(() => {
-      setIsModalOpen(false);
-      setIsSuccess(false);
-    }, 2500);
+    const form = e.currentTarget;
+
+    fetch('https://formspree.io/f/movlkwaq', {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { Accept: 'application/json' },
+    })
+      .then((res) => {
+        if (res.ok) {
+          form.reset();
+          setIsSuccess(true);
+          setTimeout(() => {
+            setIsModalOpen(false);
+            setIsSuccess(false);
+          }, 2500);
+        } else {
+          setIsError(true);
+          setTimeout(() => setIsError(false), 3000);
+        }
+      })
+      .catch(() => {
+        setIsError(true);
+        setTimeout(() => setIsError(false), 3000);
+      });
+  };
+
+  const handleContactSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+
+    fetch('https://formspree.io/f/movlkwaq', {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { Accept: 'application/json' },
+    })
+      .then((res) => {
+        if (res.ok) {
+          form.reset();
+          setContactSuccess(true);
+          setTimeout(() => {
+            setContactSuccess(false);
+          }, 2500);
+        }
+      })
+      .catch(() => {
+        //  agregar notificación de error 
+      });
   };
 
   return (
     <div className="aholu-landing">
       {/* NAVBAR */}
-      <header className="navbar">
+      <header className="navbar" aria-label="Barra de navegación">
         <div className="container navbar-content">
-          <h1 className="logo" onClick={scrollToTop}>Aholú</h1>
+          <h1 className="logo" onClick={scrollToTop} aria-label="Inicio">
+            Aholú
+          </h1>
 
-          <nav className="nav-links">
+          <nav className="nav-links" aria-label="Navegación principal">
             <a href="#how">Cómo funciona</a>
             <a href="#services">Servicios</a>
             <a href="#testimonials">Testimonios</a>
@@ -50,6 +96,7 @@ export default function Home() {
           <button
             className="cta-button"
             onClick={() => setIsModalOpen(true)}
+            aria-label="Abrir formulario para subir factura"
           >
             Subir factura
           </button>
@@ -57,24 +104,34 @@ export default function Home() {
           <button
             className="hamburger"
             onClick={() => setMenuOpen(!menuOpen)}
-            aria-label="Menú"
+            aria-label="Menú móvil"
+            aria-expanded={menuOpen}
           >
             ☰
           </button>
         </div>
 
         {menuOpen && (
-          <nav className="mobile-menu">
-            <a href="#how" onClick={() => setMenuOpen(false)}>Cómo funciona</a>
-            <a href="#services" onClick={() => setMenuOpen(false)}>Servicios</a>
-            <a href="#testimonials" onClick={() => setMenuOpen(false)}>Testimonios</a>
-            <a href="#contact" onClick={() => setMenuOpen(false)}>Contacto</a>
+          <nav className="mobile-menu" role="menu">
+            <a href="#how" onClick={() => setMenuOpen(false)} role="menuitem">
+              Cómo funciona
+            </a>
+            <a href="#services" onClick={() => setMenuOpen(false)} role="menuitem">
+              Servicios
+            </a>
+            <a href="#testimonials" onClick={() => setMenuOpen(false)} role="menuitem">
+              Testimonios
+            </a>
+            <a href="#contact" onClick={() => setMenuOpen(false)} role="menuitem">
+              Contacto
+            </a>
             <button
               className="cta-button mobile-cta"
               onClick={() => {
                 setIsModalOpen(true);
                 setMenuOpen(false);
               }}
+              role="menuitem"
             >
               Subir factura
             </button>
@@ -90,7 +147,7 @@ export default function Home() {
               <span className="highlight">Tu luz</span> puede costar menos.
             </h2>
             <p>
-              Sube tu factura y nosotros encontramos la mejor tarifa para ti. 
+              Sube tu factura y nosotros encontramos la mejor tarifa para ti.{' '}
               <strong> Sin trámites, sin llamadas, sin pagar por adelantado.</strong>
             </p>
             <button
@@ -173,18 +230,20 @@ export default function Home() {
       {/* CONTACTO */}
       <section id="contact" className="section contact">
         <h3>¿Tienes dudas?</h3>
-        <p>Escíbenos y te responderemos en menos de 24h.</p>
-        <form
-          className="form"
-          onSubmit={(e) => {
-            e.preventDefault();
-            alert('Gracias por tu mensaje. Te responderemos pronto.');
-          }}
-        >
-          <input name="email" type="email" placeholder="Tu correo electrónico" required />
-          <textarea name="message" placeholder="Tu mensaje" rows={4} required></textarea>
-          <button type="submit">Enviar mensaje</button>
-        </form>
+        <p>Escríbenos y te responderemos en menos de 24h.</p>
+        {contactSuccess ? (
+          <div className="success-message">✅ Mensaje enviado con éxito</div>
+        ) : (
+          <form
+            className="form"
+            onSubmit={handleContactSubmit}
+            noValidate
+          >
+            <input name="email" type="email" placeholder="Tu correo electrónico" required />
+            <textarea name="message" placeholder="Tu mensaje" rows={4} required></textarea>
+            <button type="submit">Enviar mensaje</button>
+          </form>
+        )}
       </section>
 
       {/* FOOTER */}
@@ -208,19 +267,48 @@ export default function Home() {
 
       {/* MODAL */}
       {isModalOpen && (
-        <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
+        <div
+          className="modal-overlay"
+          onClick={() => setIsModalOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="modal-title"
+        >
           <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <button className="close-button" onClick={() => setIsModalOpen(false)}>✕</button>
+            <button
+              className="close-button"
+              onClick={() => setIsModalOpen(false)}
+              aria-label="Cerrar modal"
+            >
+              ✕
+            </button>
 
             {isSuccess ? (
               <div className="modal-success">
                 <h3>¡Gracias!</h3>
                 <p>Hemos recibido tu factura. Te contactaremos en menos de 24h.</p>
+                <button
+                  className="cta-button"
+                  onClick={() => setIsModalOpen(false)}
+                  style={{ marginTop: '20px' }}
+                >
+                  Cerrar
+                </button>
               </div>
             ) : (
               <>
-                <h3>Sube tu factura y empieza a ahorrar</h3>
-                <form className="form" onSubmit={handleSubmit}>
+                <h3 id="modal-title">Sube tu factura y empieza a ahorrar</h3>
+                {isError && (
+                  <div className="success-message" style={{ backgroundColor: '#fee', color: '#c00' }}>
+                    ❌ Error al enviar. Intenta de nuevo.
+                  </div>
+                )}
+                <form
+                  className="form"
+                  onSubmit={handleModalSubmit}
+                  encType="multipart/form-data"
+                  noValidate
+                >
                   <input name="name" placeholder="Tu nombre" required />
                   <input name="email" type="email" placeholder="Correo electrónico" required />
                   <input name="phone" placeholder="Teléfono" required />
