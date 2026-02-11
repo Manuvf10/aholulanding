@@ -2,30 +2,23 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import "./globals.css";
 import { Container } from "@/components/ui/Container";
+import { TopNav } from "@/components/ui/TopNav";
+import { getSessionUser } from "@/lib/auth";
 
 export const metadata: Metadata = {
   title: "todoslosoficios | Marketplace de servicios locales",
   description: "Encuentra profesionales verificados cerca de ti por ubicación, precio y valoraciones.",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const user = await getSessionUser();
+  const homeHref = !user ? "/" : user.role === "PROFESIONAL" ? "/dashboard/profesional" : "/dashboard/cliente";
+
   return (
     <html lang="es">
       <body>
-        <header className="sticky top-0 z-50 border-b backdrop-blur-md" style={{ borderColor: "var(--border)", background: "rgba(255,250,244,.88)" }}>
-          <Container className="flex items-center justify-between py-4">
-            <Link href="/" className="flex items-center gap-2">
-              <span className="ui-badge">🛠️</span>
-              <span className="text-lg font-semibold tracking-tight sm:text-xl">todoslosoficios</span>
-            </Link>
-            <nav className="hidden gap-2 md:flex">
-              <Link href="/buscar" className="ui-button ui-button-secondary">Buscar</Link>
-              <Link href="/categorias" className="ui-button ui-button-secondary">Categorías</Link>
-              <Link href="/como-funciona" className="ui-button ui-button-secondary">Cómo funciona</Link>
-              <Link href="/login" className="ui-button ui-button-primary">Entrar</Link>
-            </nav>
-            <Link href="/login" className="ui-button ui-button-primary md:hidden">Entrar</Link>
-          </Container>
+        <header className="ui-top-nav-wrap">
+          <TopNav user={user ? { name: user.name, role: user.role } : null} homeHref={homeHref} />
         </header>
 
         {children}

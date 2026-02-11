@@ -1,6 +1,6 @@
 import { cn } from "./utils";
 
-type ButtonVariant = "primary" | "secondary" | "ghost";
+type ButtonVariant = "primary" | "secondary" | "ghost" | "danger";
 
 export function Button({
   className,
@@ -15,6 +15,7 @@ export function Button({
         variant === "primary" && "ui-button-primary",
         variant === "secondary" && "ui-button-secondary",
         variant === "ghost" && "ui-button-ghost",
+        variant === "danger" && "ui-button-danger",
         className,
       )}
       {...props}
@@ -37,6 +38,7 @@ export function ButtonLink({
         variant === "primary" && "ui-button-primary",
         variant === "secondary" && "ui-button-secondary",
         variant === "ghost" && "ui-button-ghost",
+        variant === "danger" && "ui-button-danger",
         className,
       )}
       {...props}
