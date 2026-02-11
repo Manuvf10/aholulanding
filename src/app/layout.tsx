@@ -16,7 +16,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang="es">
-      <body>
+      <body className="ui-page">
+        <div className="ui-bg" aria-hidden />
         <header className="ui-top-nav-wrap">
           <TopNav user={user ? { name: user.name, role: user.role } : null} homeHref={homeHref} />
         </header>
