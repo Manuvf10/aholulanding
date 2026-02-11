@@ -1,57 +1,29 @@
-import './landing.css';
+import type { Metadata } from "next";
+import "./globals.css";
+import Link from "next/link";
 
-export const metadata = {
-  title: 'Aholú',
-  description: 'Asesoría energética para ahorrar en tu factura de luz. Sube tu factura y nosotros bajamos el precio.',
-  viewport: 'width=device-width, initial-scale=1',
-  themeColor: '#FFD700', // Color de la barra en móviles (Chrome)
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: 'default',
-    title: 'Aholú',
-  },
+export const metadata: Metadata = {
+  title: "OficiosYa | Marketplace local",
+  description: "Conecta con profesionales locales por ciudad o código postal.",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
-      <head>
-        {/* Meta viewport obligatorio para diseño responsive */}
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        
-        {/* Evita que Safari/iOS cambie los colores (modo oscuro) */}
-        <meta name="color-scheme" content="light" />
-        
-        {/* Prevenir Smart Invert en Safari */}
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `
-              @media (prefers-color-scheme: dark) {
-                html {
-                  filter: none !important;
-                  background: none !important;
-                }
-                body, .aholu-landing, .hero, .section, .modal, .footer {
-                  filter: none !important;
-                  background: #ffffff !important;
-                  color: #121212 !important;
-                }
-                img, svg, button, input, textarea {
-                  filter: none !important;
-                }
-              }
-              html {
-                color-scheme: light;
-              }
-            `,
-          }}
-        />
-      </head>
-      <body>{children}</body>
+      <body>
+        <header className="border-b bg-white">
+          <div className="container-custom flex items-center justify-between py-4">
+            <Link href="/" className="text-xl font-bold text-blue-700">OficiosYa</Link>
+            <nav className="flex gap-3 text-sm">
+              <Link href="/buscar">Buscar</Link>
+              <Link href="/categorias">Categorías</Link>
+              <Link href="/como-funciona">Cómo funciona</Link>
+              <Link href="/login" className="btn-secondary">Login</Link>
+            </nav>
+          </div>
+        </header>
+        {children}
+      </body>
     </html>
   );
 }
