@@ -34,13 +34,22 @@ export default function LoginPage() {
   return (
     <main className="ui-section">
       <Container>
-        <div className="grid overflow-hidden rounded-2xl border lg:grid-cols-2" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
-          <section className="hidden p-8 lg:block" style={{ background: "linear-gradient(155deg,#f5e7d9,#fdf6ef)" }}>
-            <h1 className="ui-h2">Inicia sesión según tu rol</h1>
-            <p className="ui-subtitle">Cliente: encuentra y solicita. Profesional: responde y gestiona solicitudes.</p>
+        <div className="grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
+          <section className="ui-app-hero relative overflow-hidden p-8">
+            <div className="ui-blob ui-blob-a" />
+            <div className="ui-blob ui-blob-c" />
+            <div className="relative z-10">
+              <p className="ui-badge">Acceso seguro</p>
+              <h1 className="ui-h2 mt-4">Inicia sesión y entra en modo {selectedRole === "CLIENTE" ? "Cliente" : "Profesional"}</h1>
+              <p className="ui-subtitle">Cliente: encuentra y solicita. Profesional: recibe leads y gestiona respuestas.</p>
+              <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                <div className="ui-kpi"><p className="text-xs" style={{ color: "var(--text-muted)" }}>Cliente demo</p><p className="text-sm font-semibold">cliente@demo.com</p></div>
+                <div className="ui-kpi"><p className="text-xs" style={{ color: "var(--text-muted)" }}>Profesional demo</p><p className="text-sm font-semibold">pro@demo.com</p></div>
+              </div>
+            </div>
           </section>
 
-          <Card className="border-0 shadow-none">
+          <Card className="ui-panel border-0">
             <h2 className="ui-h3">Iniciar sesión</h2>
             <div className="mt-4 grid grid-cols-2 gap-2 rounded-xl border p-1" style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}>
               <button type="button" className={`ui-button ${selectedRole === "CLIENTE" ? "ui-button-primary" : "ui-button-ghost"}`} onClick={() => setSelectedRole("CLIENTE")}>Cliente</button>
@@ -58,7 +67,7 @@ export default function LoginPage() {
                 <button type="button" className="ui-button ui-button-secondary">Apple (placeholder)</button>
               </div>
             </form>
-            <p className="mt-4 text-xs" style={{ color: "var(--text-muted)" }}>¿No tienes cuenta? <Link href={`/registro?role=${selectedRole}`}>Regístrate</Link></p>
+            <p className="mt-4 text-xs" style={{ color: "var(--text-muted)" }}>¿No tienes cuenta? <Link className="ui-link" href={`/registro?role=${selectedRole}`}>Regístrate</Link></p>
           </Card>
         </div>
       </Container>

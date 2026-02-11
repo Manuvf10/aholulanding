@@ -24,12 +24,12 @@ export default async function DashboardCliente() {
         </div>
 
         <div className="grid gap-6 lg:grid-cols-[220px_1fr]">
-          <aside className="ui-card hidden h-fit lg:block">
+          <aside className="ui-panel rounded-2xl p-5 hidden h-fit lg:block">
             <p className="text-xs uppercase tracking-wide" style={{ color: "var(--text-muted)" }}>Panel cliente</p>
             <div className="mt-3 space-y-2"><p className="ui-badge">Mis solicitudes</p><p className="text-sm" style={{ color: "var(--text-muted)" }}>Recomendados</p></div>
           </aside>
 
-          <section>
+          <section className="ui-panel rounded-2xl p-5 sm:p-6">
             <SectionHeader title="Encuentra profesionales cerca de ti" subtitle="Gestiona solicitudes y descubre perfiles recomendados." />
 
             <div className="mt-6 grid gap-3 sm:grid-cols-3">
@@ -40,7 +40,7 @@ export default async function DashboardCliente() {
 
             <div id="mis-solicitudes" className="mt-8">
               <h3 className="ui-h3">Mis solicitudes</h3>
-              <div className="mt-4 space-y-3">
+              <div className="ui-list-grid mt-4">
                 {items.length === 0 ? (
                   <div className="ui-empty">
                     <p className="text-3xl">📭</p>
@@ -60,7 +60,7 @@ export default async function DashboardCliente() {
               </div>
             </div>
 
-            <div className="mt-8">
+            <div className="mt-8 ui-soft-divider pt-8">
               <h3 className="ui-h3">Recomendados para ti</h3>
               <div className="mt-4 grid gap-3 md:grid-cols-3">
                 {recommended.map((pro) => (

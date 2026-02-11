@@ -1,4 +1,5 @@
 import { Container } from "@/components/ui/Container";
+import { BackgroundFX } from "@/components/ui/BackgroundFX";
 import RegistroForm from "./registro-form";
 
 export default async function RegistroPage({ searchParams }: { searchParams: Promise<{ role?: string }> }) {
@@ -8,12 +9,16 @@ export default async function RegistroPage({ searchParams }: { searchParams: Pro
   return (
     <main className="ui-section">
       <Container>
-        <div className="grid overflow-hidden rounded-2xl border lg:grid-cols-2" style={{ borderColor: "var(--border)", background: "var(--surface)" }}>
-          <section className="hidden p-8 lg:block" style={{ background: "linear-gradient(155deg,#f5e7d9,#fdf6ef)" }}>
-            <h1 className="ui-h2">Crea tu cuenta por rol</h1>
-            <p className="ui-subtitle">Cliente: publica necesidades. Profesional: recibe solicitudes y responde rápido.</p>
+        <div className="grid gap-5 lg:grid-cols-[1.05fr_0.95fr]">
+          <section className="ui-app-hero relative overflow-hidden p-8">
+            <BackgroundFX />
+            <div className="relative z-10">
+              <p className="ui-badge">Onboarding premium</p>
+              <h1 className="ui-h2 mt-4">Crea tu cuenta como {role === "CLIENTE" ? "Cliente" : "Profesional"}</h1>
+              <p className="ui-subtitle">Completa tu perfil y empieza a usar todoslosoficios con una experiencia moderna y enfocada.</p>
+            </div>
           </section>
-          <div className="p-6 sm:p-8">
+          <div className="ui-panel rounded-2xl p-6 sm:p-8">
             <h2 className="ui-h3">Registro {role === "CLIENTE" ? "de cliente" : "profesional"}</h2>
             <RegistroForm role={role} />
           </div>
