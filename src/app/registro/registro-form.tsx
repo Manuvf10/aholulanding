@@ -17,11 +17,21 @@ export default function RegistroForm({ role }: { role: "CLIENTE" | "PROFESIONAL"
   return (
     <form className="card mt-6 grid max-w-3xl gap-4" onSubmit={onSubmit}>
       <div className="grid gap-4 sm:grid-cols-2">
-        <div><label className="label">Nombre</label><input name="name" className="input" required /></div>
-        <div><label className="label">Email</label><input name="email" type="email" className="input" required /></div>
+        <div>
+          <label className="label">Nombre</label>
+          <div className="input-wrapper"><span className="input-icon">👤</span><input name="name" className="input input-with-icon" required /></div>
+        </div>
+        <div>
+          <label className="label">Email</label>
+          <div className="input-wrapper"><span className="input-icon">✉️</span><input name="email" type="email" className="input input-with-icon" required /></div>
+        </div>
       </div>
+
       <div className="grid gap-4 sm:grid-cols-2">
-        <div><label className="label">Contraseña</label><input name="password" type="password" className="input" required minLength={6} /></div>
+        <div>
+          <label className="label">Contraseña</label>
+          <div className="input-wrapper"><span className="input-icon">🔒</span><input name="password" type="password" className="input input-with-icon" required minLength={6} /></div>
+        </div>
         <div>
           <label className="label">Ciudad / CP</label>
           <select name="city" className="select">
@@ -34,16 +44,19 @@ export default function RegistroForm({ role }: { role: "CLIENTE" | "PROFESIONAL"
         <>
           <div className="grid gap-4 sm:grid-cols-2">
             <div><label className="label">Oficio</label><select className="select" name="category">{categoriesList.map((c) => <option key={c}>{c}</option>)}</select></div>
-            <div><label className="label">Tarifa base (€)</label><input className="input" name="basePrice" type="number" defaultValue={45} /></div>
+            <div>
+              <label className="label">Tarifa base (€)</label>
+              <div className="input-wrapper"><span className="input-icon">💶</span><input className="input input-with-icon" name="basePrice" type="number" defaultValue={45} /></div>
+            </div>
           </div>
 
-          <div><label className="label">Descripción</label><textarea className="textarea" name="description" rows={3} placeholder="Cuéntanos tu experiencia y especialidades" /></div>
+          <div><label className="label">Descripción</label><textarea className="textarea" name="description" rows={3} placeholder="Cuéntanos experiencia, especialidades y valor diferencial" /></div>
 
           <div>
             <label className="label">Disponibilidad</label>
-            <div className="flex flex-wrap gap-3 text-sm">
+            <div className="grid gap-2 sm:grid-cols-3">
               {["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"].map((d) => (
-                <label key={d} className="inline-flex items-center gap-2 rounded-lg border border-[var(--border)] bg-[var(--surface)] px-3 py-2">
+                <label key={d} className="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] px-3 py-2 text-sm">
                   <input type="checkbox" name="availability" value={d} />
                   {d}
                 </label>
@@ -58,6 +71,7 @@ export default function RegistroForm({ role }: { role: "CLIENTE" | "PROFESIONAL"
           </label>
         </>
       )}
+
       <button className="btn-primary mt-1" type="submit">Crear cuenta</button>
     </form>
   );

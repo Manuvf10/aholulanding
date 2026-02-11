@@ -21,20 +21,25 @@ export default function LoginPage() {
 
   return (
     <main className="container-custom py-12">
-      <div className="mx-auto grid max-w-5xl items-center gap-6 md:grid-cols-2">
+      <div className="mx-auto grid max-w-5xl items-center gap-8 lg:grid-cols-2">
         <div>
-          <p className="badge inline-block">Acceso seguro</p>
-          <h1 className="mt-3 text-3xl font-bold sm:text-4xl">Bienvenido a todoslosoficios</h1>
-          <p className="mt-3 text-sm text-[var(--muted)]">Entra para gestionar solicitudes, presupuestos y tu perfil profesional.</p>
+          <span className="badge">Acceso a tu panel</span>
+          <h1 className="mt-4 text-4xl font-semibold tracking-tight">Bienvenido a todoslosoficios</h1>
+          <p className="mt-3 text-sm text-[var(--muted)]">Gestiona tus solicitudes, presupuesto y perfil desde una experiencia simple y profesional.</p>
+          <div className="mt-6 grid gap-3 sm:grid-cols-2">
+            <div className="kpi"><p className="text-xs text-[var(--muted)]">Cliente demo</p><p className="font-semibold">cliente@demo.com</p></div>
+            <div className="kpi"><p className="text-xs text-[var(--muted)]">Profesional demo</p><p className="font-semibold">pro@demo.com</p></div>
+          </div>
         </div>
 
         <form className="card" onSubmit={onSubmit}>
-          <label className="label" htmlFor="email">Email</label>
-          <input className="input" id="email" name="email" required />
+          <h2 className="text-xl font-semibold">Iniciar sesión</h2>
+          <label className="label mt-4" htmlFor="email">Email</label>
+          <div className="input-wrapper"><span className="input-icon">✉️</span><input className="input input-with-icon" id="email" name="email" required /></div>
           <label className="label mt-3" htmlFor="password">Contraseña</label>
-          <input className="input" id="password" type="password" name="password" required />
-          {error && <p className="mt-3 text-sm text-red-700">{error}</p>}
-          <button className="btn-primary mt-4 w-full" type="submit">Entrar</button>
+          <div className="input-wrapper"><span className="input-icon">🔒</span><input className="input input-with-icon" id="password" type="password" name="password" required /></div>
+          {error && <p className="mt-3 text-sm text-[var(--danger)]">{error}</p>}
+          <button className="btn-primary mt-5 w-full" type="submit">Entrar</button>
           <p className="mt-4 text-xs text-[var(--muted)]">Demo: cliente@demo.com / 123456 | pro@demo.com / 123456</p>
         </form>
       </div>

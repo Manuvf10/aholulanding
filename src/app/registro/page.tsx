@@ -6,9 +6,9 @@ export default async function RegistroPage({ searchParams }: { searchParams: Pro
 
   return (
     <main className="container-custom py-12">
-      <p className="badge inline-block">Alta de usuarios</p>
-      <h1 className="mt-3 text-3xl font-bold sm:text-4xl">Registro {role === "CLIENTE" ? "de cliente" : "profesional"}</h1>
-      <p className="mt-2 text-sm text-[var(--muted)]">Completa tus datos para empezar a usar todoslosoficios.</p>
+      <span className="badge">Alta en plataforma</span>
+      <h1 className="mt-4 text-4xl font-semibold tracking-tight">Registro {role === "CLIENTE" ? "de cliente" : "profesional"}</h1>
+      <p className="mt-2 text-sm text-[var(--muted)]">Completa tus datos para empezar a usar todoslosoficios con una experiencia moderna y segura.</p>
       <RegistroForm role={role} />
     </main>
   );
