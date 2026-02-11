@@ -1,0 +1,100 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f6f1eb;
+  --surface: #fffaf5;
+  --surface-strong: #ffffff;
+  --text: #2e1f16;
+  --muted: #6f5647;
+  --primary: #6f4e37;
+  --primary-strong: #5b3f2d;
+  --primary-soft: #efe3d7;
+  --border: #e4d4c7;
+  --ring: #8b6a53;
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  background:
+    radial-gradient(circle at 0% 0%, #fff4e8 0%, transparent 35%),
+    radial-gradient(circle at 100% 100%, #ead8c8 0%, transparent 30%),
+    var(--background);
+  color: var(--text);
+}
+
+.container-custom {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6;
+}
+
+.glass {
+  background: color-mix(in oklab, white 72%, #f1e2d5 28%);
+  backdrop-filter: blur(6px);
+}
+
+.card {
+  @apply rounded-2xl border p-5 shadow-sm transition-all duration-300;
+  border-color: var(--border);
+  background: var(--surface-strong);
+}
+
+.card:hover {
+  @apply -translate-y-0.5 shadow-md;
+}
+
+.section-title {
+  @apply text-2xl font-semibold sm:text-3xl;
+}
+
+.section-subtitle {
+  color: var(--muted);
+  @apply mt-2 max-w-2xl text-sm sm:text-base;
+}
+
+.btn-primary {
+  @apply inline-flex items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:shadow-md focus:outline-none focus:ring-2;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-strong) 100%);
+  --tw-ring-color: color-mix(in oklab, var(--ring), white 20%);
+}
+
+.btn-secondary {
+  @apply inline-flex items-center justify-center rounded-xl border px-4 py-2.5 text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm focus:outline-none focus:ring-2;
+  border-color: var(--border);
+  color: var(--text);
+  background: var(--surface);
+  --tw-ring-color: color-mix(in oklab, var(--ring), white 25%);
+}
+
+.badge {
+  @apply rounded-full px-2.5 py-1 text-xs font-medium;
+  background: var(--primary-soft);
+  color: var(--primary-strong);
+}
+
+.input,
+.select,
+.textarea {
+  @apply w-full rounded-xl border px-3 py-2.5 text-sm outline-none transition;
+  border-color: var(--border);
+  background: #fff;
+}
+
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: var(--ring);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--ring), white 78%);
+}
+
+.label {
+  @apply mb-1 block text-sm font-medium;
+  color: var(--muted);
+}
+
+.kpi {
+  @apply rounded-xl border px-4 py-3;
+  border-color: var(--border);
+  background: var(--surface);
+}

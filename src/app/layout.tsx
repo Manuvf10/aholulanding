@@ -1,57 +1,33 @@
-import './landing.css';
+import type { Metadata } from "next";
+import Link from "next/link";
+import "./globals.css";
 
-export const metadata = {
-  title: 'Aholú',
-  description: 'Asesoría energética para ahorrar en tu factura de luz. Sube tu factura y nosotros bajamos el precio.',
-  viewport: 'width=device-width, initial-scale=1',
-  themeColor: '#FFD700', // Color de la barra en móviles (Chrome)
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: 'default',
-    title: 'Aholú',
-  },
+export const metadata: Metadata = {
+  title: "todoslosoficios | Marketplace de servicios locales",
+  description: "Encuentra profesionales verificados cerca de ti por ubicación, precio y valoraciones.",
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
-      <head>
-        {/* Meta viewport obligatorio para diseño responsive */}
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        
-        {/* Evita que Safari/iOS cambie los colores (modo oscuro) */}
-        <meta name="color-scheme" content="light" />
-        
-        {/* Prevenir Smart Invert en Safari */}
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `
-              @media (prefers-color-scheme: dark) {
-                html {
-                  filter: none !important;
-                  background: none !important;
-                }
-                body, .aholu-landing, .hero, .section, .modal, .footer {
-                  filter: none !important;
-                  background: #ffffff !important;
-                  color: #121212 !important;
-                }
-                img, svg, button, input, textarea {
-                  filter: none !important;
-                }
-              }
-              html {
-                color-scheme: light;
-              }
-            `,
-          }}
-        />
-      </head>
-      <body>{children}</body>
+      <body>
+        <header className="sticky top-0 z-40 border-b border-[var(--border)]/80 bg-[var(--surface)]/90 backdrop-blur">
+          <div className="container-custom flex items-center justify-between py-4">
+            <Link href="/" className="text-lg font-bold tracking-tight text-[var(--primary-strong)] sm:text-xl">
+              todoslosoficios
+            </Link>
+
+            <nav className="hidden items-center gap-2 text-sm sm:flex">
+              <Link href="/buscar" className="btn-secondary">Buscar</Link>
+              <Link href="/categorias" className="btn-secondary">Categorías</Link>
+              <Link href="/como-funciona" className="btn-secondary">Cómo funciona</Link>
+              <Link href="/login" className="btn-primary">Entrar</Link>
+            </nav>
+          </div>
+        </header>
+
+        {children}
+      </body>
     </html>
   );
 }
