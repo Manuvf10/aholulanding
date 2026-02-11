@@ -1,153 +1,112 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f7f2ec;
-  --background-2: #fff9f3;
-  --surface: #fffefc;
-  --surface-soft: #fcf6f0;
-  --text: #2d2018;
-  --muted: #7a6253;
-  --primary: #7a5135;
-  --primary-strong: #5f3e2a;
-  --accent: #c98f62;
-  --primary-soft: #f3e6d9;
-  --border: #ead9ca;
-  --ring: #9a7254;
-  --success: #1f7a45;
-  --warning: #9a5a20;
-  --danger: #9f2f2f;
+  --bg: #f8f3ed;
+  --bg-elevated: #fffaf4;
+  --surface: #fffcf8;
+  --surface-2: #fdf6ef;
+  --text: #2f241c;
+  --text-muted: #776152;
+  --primary: #6b4530;
+  --primary-strong: #563727;
+  --accent: #c68a5a;
+  --border: #ead9c9;
+  --shadow: 0 10px 30px -18px rgba(82, 53, 35, 0.28);
+  --radius: 1rem;
 }
 
-* {
-  scroll-behavior: smooth;
-}
-
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
 body {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   background:
-    radial-gradient(circle at 12% 10%, #fff6ec 0%, transparent 32%),
-    radial-gradient(circle at 88% 100%, #efdfd0 0%, transparent 30%),
-    linear-gradient(180deg, var(--background-2) 0%, var(--background) 100%);
+    radial-gradient(1200px 600px at -20% -10%, #fff6eb 0%, transparent 60%),
+    radial-gradient(1000px 400px at 120% 120%, #f0dfcf 0%, transparent 55%),
+    var(--bg);
   color: var(--text);
 }
 
-.container-custom {
-  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
-}
+a { color: inherit; text-decoration: none; }
 
-.surface {
-  background: color-mix(in oklab, var(--surface) 85%, white 15%);
-}
+.container-custom { @apply mx-auto w-full max-w-[1180px] px-4 sm:px-6 lg:px-8; }
 
-.card {
-  @apply rounded-2xl border p-5 shadow-sm transition-all duration-300;
+.ui-h1 { @apply text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl; }
+.ui-h2 { @apply text-2xl font-semibold tracking-tight sm:text-3xl; }
+.ui-h3 { @apply text-xl font-semibold tracking-tight; }
+.ui-subtitle { @apply mt-3 text-sm sm:text-base; color: var(--text-muted); }
+
+.ui-card {
+  @apply rounded-2xl border p-5 transition-all duration-200;
   border-color: var(--border);
   background: var(--surface);
+  box-shadow: var(--shadow);
 }
 
-.card-hover {
-  @apply hover:-translate-y-1 hover:shadow-lg;
-}
+.ui-card-hover { @apply hover:-translate-y-0.5 hover:shadow-xl; }
 
-.section-title {
-  @apply text-3xl font-semibold tracking-tight sm:text-4xl;
+.ui-button {
+  @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold transition-all duration-200 focus:outline-none focus-visible:ring-2;
 }
-
-.section-subtitle {
-  @apply mt-3 max-w-2xl text-sm sm:text-base;
-  color: var(--muted);
-}
-
-.btn-primary {
-  @apply inline-flex items-center justify-center rounded-xl px-5 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md active:translate-y-0 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus:ring-2;
+.ui-button:disabled { @apply cursor-not-allowed opacity-55; }
+.ui-button-primary {
+  color: #fff;
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-strong) 100%);
-  --tw-ring-color: color-mix(in oklab, var(--ring), white 25%);
 }
-
-.btn-secondary {
-  @apply inline-flex items-center justify-center rounded-xl border px-5 py-3 text-sm font-semibold transition-all duration-200 hover:-translate-y-0.5 hover:shadow-sm active:translate-y-0 active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-50 focus:outline-none focus:ring-2;
-  border-color: var(--border);
+.ui-button-primary:hover { filter: brightness(1.05); }
+.ui-button-secondary {
+  border: 1px solid var(--border);
+  background: var(--surface-2);
   color: var(--text);
-  background: var(--surface-soft);
-  --tw-ring-color: color-mix(in oklab, var(--ring), white 30%);
+}
+.ui-button-secondary:hover { background: #f7ecdf; }
+.ui-button-ghost {
+  background: transparent;
+  color: var(--text-muted);
 }
 
-.badge {
+.ui-badge {
   @apply inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold;
-  background: var(--primary-soft);
   color: var(--primary-strong);
+  background: #f2e5d8;
 }
 
-.badge-status {
+.ui-badge-status {
   @apply inline-flex items-center rounded-full border px-2.5 py-1 text-xs font-semibold capitalize;
   border-color: var(--border);
   background: #fff;
 }
+.status-enviado { color: #8f5f2b; background: #fff3e3; }
+.status-aceptado { color: #21613c; background: #e8f7ee; }
+.status-rechazado { color: #8f3030; background: #ffecec; }
 
-.badge-status.enviado {
-  color: var(--warning);
-  border-color: color-mix(in oklab, var(--warning), white 70%);
-  background: color-mix(in oklab, var(--warning), white 90%);
+.ui-field-wrap { @apply relative; }
+.ui-field-icon {
+  @apply pointer-events-none absolute left-3 top-1/2 -translate-y-1/2;
+  color: var(--text-muted);
 }
-
-.badge-status.aceptado {
-  color: var(--success);
-  border-color: color-mix(in oklab, var(--success), white 70%);
-  background: color-mix(in oklab, var(--success), white 92%);
-}
-
-.badge-status.rechazado {
-  color: var(--danger);
-  border-color: color-mix(in oklab, var(--danger), white 70%);
-  background: color-mix(in oklab, var(--danger), white 92%);
-}
-
-.input,
-.select,
-.textarea {
-  @apply w-full rounded-xl border px-3 py-2.5 text-sm outline-none transition;
+.ui-input {
+  @apply w-full rounded-xl border px-3 py-2.5 text-sm outline-none transition duration-200;
   border-color: var(--border);
   background: #fff;
 }
-
-.input-wrapper {
-  @apply relative;
+.ui-input-with-icon { @apply pl-9; }
+.ui-input:focus {
+  border-color: #b6845f;
+  box-shadow: 0 0 0 4px rgba(182, 132, 95, 0.2);
 }
 
-.input-icon {
-  @apply pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-sm;
-  color: var(--muted);
-}
+.ui-alert { @apply rounded-xl border px-3 py-2 text-sm; }
+.ui-alert-info { border-color: #ddc7b3; background: #fdf6ee; color: #6b4e38; }
+.ui-alert-success { border-color: #bde0c8; background: #edfbf2; color: #1f5f3a; }
+.ui-alert-error { border-color: #efc5c5; background: #fff0f0; color: #8c2f2f; }
 
-.input-with-icon {
-  @apply pl-9;
-}
-
-.input:focus,
-.select:focus,
-.textarea:focus {
-  border-color: var(--ring);
-  box-shadow: 0 0 0 4px color-mix(in oklab, var(--ring), white 82%);
-}
-
-.label {
-  @apply mb-1 block text-sm font-medium;
-  color: var(--muted);
-}
-
-.kpi {
-  @apply rounded-xl border px-4 py-3;
+.ui-empty {
+  @apply rounded-2xl border border-dashed p-10 text-center;
   border-color: var(--border);
-  background: var(--surface-soft);
+  background: color-mix(in oklab, var(--surface), white 15%);
 }
 
-.empty-state {
-  @apply rounded-2xl border border-dashed p-8 text-center;
-  border-color: var(--border);
-  background: color-mix(in oklab, var(--surface), #fff 25%);
-}
+.ui-kpi { @apply rounded-xl border px-4 py-3; border-color: var(--border); background: var(--surface-2); }
+.ui-section { @apply py-12 sm:py-16; }
 
-.skeleton {
-  @apply animate-pulse rounded-xl;
-  background: linear-gradient(90deg, #f4e6da 0%, #f7eee6 50%, #f4e6da 100%);
-  background-size: 200% 100%;
-}
+.ui-skeleton { @apply animate-pulse rounded-xl; background: linear-gradient(90deg,#f4e7db,#faefe5,#f4e7db); }

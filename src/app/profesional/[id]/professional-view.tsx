@@ -2,77 +2,92 @@
 
 import { useState } from "react";
 import { professionals } from "@/data/professionals";
+import { Container } from "@/components/ui/Container";
+import { Card } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
+import { Alert } from "@/components/ui/Alert";
 
 export default function ProfessionalView({ id }: { id: string }) {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [date, setDate] = useState("");
   const [ok, setOk] = useState(false);
+  const [error, setError] = useState("");
   const pro = professionals.find((p) => p.id === id) ?? professionals[0];
 
   async function submitReq(e: React.FormEvent) {
     e.preventDefault();
+    if (!message || !date) {
+      setError("Completa mensaje y fecha preferida.");
+      return;
+    }
+    setError("");
     await fetch("/api/mock/requests", { method: "POST", body: JSON.stringify({ professionalId: pro.id, professionalName: pro.name, message, preferredDate: date }) });
     setOk(true);
     setTimeout(() => setOk(false), 2400);
   }
 
   return (
-    <main className="container-custom py-10">
-      <section className="card overflow-hidden p-0">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={pro.photo} alt={`Foto de ${pro.name}`} className="h-56 w-full object-cover sm:h-72" />
-        <div className="grid gap-6 p-6 md:grid-cols-[1fr_280px]">
-          <div>
-            <h1 className="text-3xl font-semibold">{pro.name}</h1>
-            <p className="mt-1 text-sm text-[var(--muted)]">{pro.category} · {pro.city}</p>
-            <div className="mt-3 flex flex-wrap gap-2">{pro.badges.map((b) => <span key={b} className="badge">{b}</span>)}</div>
-            <p className="mt-4 text-sm leading-relaxed text-[var(--muted)]">{pro.description}</p>
+    <main className="ui-section">
+      <Container>
+        <Card className="overflow-hidden p-0">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={pro.photo} alt={`Foto de ${pro.name}`} className="h-60 w-full object-cover sm:h-80" />
+          <div className="grid gap-6 p-6 lg:grid-cols-[1fr_300px]">
+            <section>
+              <h1 className="ui-h2">{pro.name}</h1>
+              <p className="ui-subtitle">{pro.category} · {pro.city}</p>
+              <div className="mt-3 flex flex-wrap gap-2">{pro.badges.map((b) => <Badge key={b}>{b}</Badge>)}</div>
+              <h3 className="ui-h3 mt-6">Sobre mí</h3>
+              <p className="ui-subtitle mt-2">{pro.description}</p>
+              <h3 className="ui-h3 mt-6">Servicios</h3>
+              <p className="ui-subtitle mt-2">{pro.services.join(", ")}</p>
+              <h3 className="ui-h3 mt-6">Zona de trabajo</h3>
+              <p className="ui-subtitle mt-2">{pro.workZones.join(", ")}</p>
+            </section>
 
-            <div className="mt-5 space-y-2 text-sm">
-              <p><strong>Servicios:</strong> {pro.services.join(", ")}</p>
-              <p><strong>Zona de trabajo:</strong> {pro.workZones.join(", ")}</p>
-            </div>
+            <aside className="rounded-2xl border p-4" style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}>
+              <p className="text-xs uppercase tracking-wide" style={{ color: "var(--text-muted)" }}>Resumen</p>
+              <p className="mt-3 text-3xl font-semibold">{pro.basePrice}€</p>
+              <p className="text-sm" style={{ color: "var(--text-muted)" }}>desde</p>
+              <p className="mt-2 text-sm">⭐ {pro.rating} ({pro.reviewsCount})</p>
+              <button className="ui-button ui-button-primary mt-4 w-full" onClick={() => setOpen(true)}>Solicitar presupuesto</button>
+            </aside>
           </div>
+        </Card>
 
-          <aside className="rounded-2xl border border-[var(--border)] bg-[var(--surface-soft)] p-4">
-            <p className="text-xs uppercase tracking-wide text-[var(--muted)]">Información clave</p>
-            <p className="mt-3 text-2xl font-semibold">{pro.basePrice}€ <span className="text-xs font-normal text-[var(--muted)]">desde</span></p>
-            <p className="mt-1 text-sm">⭐ {pro.rating} ({pro.reviewsCount})</p>
-            <button className="btn-primary mt-4 w-full" onClick={() => setOpen(true)}>Solicitar presupuesto</button>
-          </aside>
-        </div>
-      </section>
+        <Card className="mt-6">
+          <h3 className="ui-h3">Reseñas recientes</h3>
+          <div className="mt-4 space-y-3">
+            {pro.reviews.map((r) => (
+              <article key={r.id} className="rounded-xl border p-3" style={{ borderColor: "var(--border)", background: "var(--surface-2)" }}>
+                <p className="text-sm font-semibold">{r.author} · {r.date}</p>
+                <p className="ui-subtitle mt-1">{r.comment}</p>
+              </article>
+            ))}
+          </div>
+        </Card>
 
-      <section className="card mt-6">
-        <h2 className="text-xl font-semibold">Reseñas</h2>
-        <p className="mt-1 text-sm text-[var(--muted)]">Opiniones recientes de clientes</p>
-        <div className="mt-4 space-y-3">
-          {pro.reviews.map((r) => (
-            <article key={r.id} className="rounded-xl border border-[var(--border)] bg-[var(--surface-soft)] p-3">
-              <p className="text-sm font-semibold">{r.author} · {r.date}</p>
-              <p className="mt-1 text-sm text-[var(--muted)]">{r.comment}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/45 p-4">
-          <form className="card w-full max-w-md" onSubmit={submitReq}>
-            <h3 className="text-lg font-semibold">Solicitar presupuesto a {pro.name}</h3>
-            <label className="label mt-3">Mensaje</label>
-            <textarea className="textarea" required value={message} onChange={(e) => setMessage(e.target.value)} />
-            <label className="label mt-3">Fecha preferida</label>
-            <input className="input" type="date" required value={date} onChange={(e) => setDate(e.target.value)} />
-            {ok && <p className="mt-3 text-sm text-[var(--success)]">Solicitud enviada correctamente.</p>}
-            <div className="mt-4 flex gap-2">
-              <button className="btn-primary" type="submit">Enviar</button>
-              <button type="button" className="btn-secondary" onClick={() => setOpen(false)}>Cerrar</button>
-            </div>
-          </form>
-        </div>
-      )}
+        {open && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" role="dialog" aria-modal="true" aria-label="Solicitar presupuesto">
+            <Card className="w-full max-w-md">
+              <h3 className="ui-h3">Solicitar presupuesto a {pro.name}</h3>
+              <form className="mt-3" onSubmit={submitReq}>
+                <label className="text-sm font-medium">Mensaje</label>
+                <textarea className="ui-input mt-1" rows={4} value={message} onChange={(e) => setMessage(e.target.value)} />
+                <label className="mt-3 block text-sm font-medium">Fecha preferida</label>
+                <input className="ui-input mt-1" type="date" value={date} onChange={(e) => setDate(e.target.value)} />
+                {error && <Alert tone="error" className="mt-3">{error}</Alert>}
+                {ok && <Alert tone="success" className="mt-3">Solicitud enviada correctamente.</Alert>}
+                <div className="mt-4 flex gap-2">
+                  <button className="ui-button ui-button-primary" type="submit">Enviar</button>
+                  <button type="button" className="ui-button ui-button-secondary" onClick={() => setOpen(false)}>Cerrar</button>
+                </div>
+              </form>
+            </Card>
+          </div>
+        )}
+      </Container>
     </main>
   );
 }

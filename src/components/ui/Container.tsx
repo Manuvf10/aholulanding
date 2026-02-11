@@ -1,0 +1,5 @@
+import { cn } from "./utils";
+
+export function Container({ className, children }: { className?: string; children: React.ReactNode }) {
+  return <div className={cn("container-custom", className)}>{children}</div>;
+}

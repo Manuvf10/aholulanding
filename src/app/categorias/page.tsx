@@ -1,4 +1,7 @@
 import { categoriesList } from "@/data/professionals";
+import { Container } from "@/components/ui/Container";
+import { Card } from "@/components/ui/Card";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 
 const icons: Record<string, string> = {
   Fontanería: "🚰",
@@ -10,18 +13,18 @@ const icons: Record<string, string> = {
 
 export default function CategoriasPage() {
   return (
-    <main className="container-custom py-10">
-      <h1 className="section-title">Categorías</h1>
-      <p className="section-subtitle">Explora oficios con profesionales listos para ayudarte.</p>
-      <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-3">
-        {categoriesList.map((c) => (
-          <div key={c} className="card card-hover">
-            <p className="text-2xl">{icons[c] ?? "🛠️"}</p>
-            <p className="mt-2 text-lg font-semibold">{c}</p>
-            <p className="mt-1 text-sm text-[var(--muted)]">Expertos verificados y reseñados.</p>
-          </div>
-        ))}
-      </div>
+    <main className="ui-section">
+      <Container>
+        <SectionHeader title="Categorías" subtitle="Explora oficios con profesionales disponibles hoy." />
+        <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-3">
+          {categoriesList.map((c) => (
+            <Card key={c} className="ui-card-hover">
+              <p className="text-2xl">{icons[c] ?? "🛠️"}</p>
+              <p className="mt-2 text-lg font-semibold">{c}</p>
+            </Card>
+          ))}
+        </div>
+      </Container>
     </main>
   );
 }
