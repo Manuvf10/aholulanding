@@ -60,7 +60,10 @@ export default async function BuscarPage({ searchParams }: { searchParams: Promi
                   </div>
                   <div className="flex items-center justify-between gap-4 md:flex-col md:items-end">
                     <p className="text-xl font-semibold">{p.basePrice}€ <span className="text-xs" style={{ color: "var(--text-muted)" }}>desde</span></p>
-                    <Link href={`/profesional/${p.id}`} className="ui-button ui-button-secondary">Ver perfil</Link>
+                    <div className="flex gap-2">
+                      <Link href={`/profesional/${p.id}`} className="ui-button ui-button-secondary">Ver perfil</Link>
+                      <Link href={`/profesional/${p.id}`} className="ui-button ui-button-primary">Solicitar</Link>
+                    </div>
                   </div>
                 </Card>
               ))}

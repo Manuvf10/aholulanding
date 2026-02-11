@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { professionals } from "@/data/professionals";
 import { Container } from "@/components/ui/Container";
 import { Card } from "@/components/ui/Card";
@@ -13,7 +13,31 @@ export default function ProfessionalView({ id }: { id: string }) {
   const [date, setDate] = useState("");
   const [ok, setOk] = useState(false);
   const [error, setError] = useState("");
+  const modalRef = useRef<HTMLDivElement>(null);
   const pro = professionals.find((p) => p.id === id) ?? professionals[0];
+
+  useEffect(() => {
+    if (!open || !modalRef.current) return;
+    const root = modalRef.current;
+    const focusables = root.querySelectorAll<HTMLElement>("button, [href], input, textarea, select, [tabindex]:not([tabindex='-1'])");
+    focusables[0]?.focus();
+    const handle = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+      if (e.key !== "Tab" || focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      }
+      if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener("keydown", handle);
+    return () => document.removeEventListener("keydown", handle);
+  }, [open]);
 
   async function submitReq(e: React.FormEvent) {
     e.preventDefault();
@@ -70,6 +94,7 @@ export default function ProfessionalView({ id }: { id: string }) {
 
         {open && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" role="dialog" aria-modal="true" aria-label="Solicitar presupuesto">
+            <div ref={modalRef} className="w-full max-w-md">
             <Card className="w-full max-w-md">
               <h3 className="ui-h3">Solicitar presupuesto a {pro.name}</h3>
               <form className="mt-3" onSubmit={submitReq}>
@@ -85,6 +110,7 @@ export default function ProfessionalView({ id }: { id: string }) {
                 </div>
               </form>
             </Card>
+            </div>
           </div>
         )}
       </Container>
