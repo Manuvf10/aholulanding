@@ -173,3 +173,58 @@ a { color: inherit; text-decoration: none; }
 .ui-section { @apply py-12 sm:py-16; }
 
 .ui-skeleton { @apply animate-pulse rounded-xl; background: linear-gradient(90deg,#eef2ff,#f6f8ff,#eef2ff); }
+
+
+.ui-marketing-hero {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  background: color-mix(in oklab, #ffffff 88%, #eef2ff 12%);
+  box-shadow: var(--shadow);
+}
+
+.ui-blob {
+  position: absolute;
+  filter: blur(42px);
+  border-radius: 999px;
+  opacity: 0.48;
+}
+
+.ui-blob-a {
+  width: 28rem;
+  height: 28rem;
+  top: -9rem;
+  left: -8rem;
+  background: radial-gradient(circle, rgba(110, 99, 255, 0.42) 0%, rgba(110, 99, 255, 0) 70%);
+}
+
+.ui-blob-b {
+  width: 22rem;
+  height: 22rem;
+  right: -5rem;
+  bottom: -8rem;
+  background: radial-gradient(circle, rgba(43, 102, 255, 0.22) 0%, rgba(43, 102, 255, 0) 72%);
+}
+
+.ui-blob-c {
+  width: 18rem;
+  height: 18rem;
+  left: 45%;
+  top: -6rem;
+  background: radial-gradient(circle, rgba(255, 177, 83, 0.2) 0%, rgba(255, 177, 83, 0) 72%);
+}
+
+.ui-noise {
+  position: absolute;
+  inset: 0;
+  opacity: 0.1;
+  background-image: radial-gradient(rgba(36, 44, 69, 0.18) 0.4px, transparent 0.4px);
+  background-size: 4px 4px;
+}
+
+.ui-glass {
+  background: color-mix(in oklab, #ffffff 80%, #eef2ff 20%);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(7px);
+}
